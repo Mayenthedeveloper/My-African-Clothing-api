@@ -9,7 +9,7 @@ const UsersService = {
         .into('african_clothings_users')
         .returning('*')
         .then(rows => {
-          return rows[0]
+           return rows[0]
         })
     },
   
@@ -20,6 +20,14 @@ const UsersService = {
         .where('id', id)
         .first()
     },
+
+    getByEmail(knex, email) {
+        return knex
+          .from('african_clothings_users')
+          .select('*')
+          .where('email', email)
+          .first()
+      },
   
     deleteUser(knex, id) {
       return knex('african_clothings_users')

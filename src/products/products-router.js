@@ -22,6 +22,7 @@ productsRouter
   .route('/')
   .get((req, res, next) => {
     const knexInstance = req.app.get('db')
+    
     ProductsService.getAllProducts(knexInstance)
       .then(products => {
         res.json(products.map(serializeProduct))

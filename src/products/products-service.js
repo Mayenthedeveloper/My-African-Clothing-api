@@ -3,9 +3,9 @@ const ProductsService = {
       return knex.select('*').from('african_clothings_products')
     },
   
-    insertProduct(knex, newUser) {
+    insertProduct(knex, newProduct) {
       return knex
-        .insert(newUser)
+        .insert(newProduct)
         .into('african_clothings_products')
         .returning('*')
         .then(rows => {
@@ -27,7 +27,7 @@ const ProductsService = {
         .delete()
     },
   
-    updateProduct(knex, id, newUserFields) {
+    updateProduct(knex, id, newProductFields) {
       return knex('african_clothings_products')
         .where({ id })
         .update(newProductFields)

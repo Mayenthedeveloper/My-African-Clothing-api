@@ -9,11 +9,11 @@ const productsRouter = require('./products/products-router')
 
 const app = express()
 
-const morganOption = (NODE_ENV === 'production')
-  ? 'tiny'
-  : 'common';
+app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
+  skip: () => NODE_ENV === 'test'
+}))
 
-app.use(morgan(morganOption))
+// app.use(morgan(morganOption))
 app.use(helmet())
 app.use(cors())
 app.use('/api/users', usersRouter)

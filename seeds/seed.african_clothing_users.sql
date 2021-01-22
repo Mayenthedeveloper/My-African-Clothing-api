@@ -1,4 +1,6 @@
-INSERT INTO african_clothing_users  ( name, email, password)
+INSERT INTO african_clothings_users  ( name, email, password)
 VALUES
-  ('Jessica', 'Jessica@gmail.com', '12345'),
+  ('Jessica James', 'Jessica@gmail.com', '12345'),
+  ('Grace Jones', 'Grace@gmail.com', '12345'),
+  ('Dunder Mifflin', 'dunder@gmail.com', '12345')
   

@@ -26,11 +26,12 @@ const serializeUser = user => ({
     })
     .post(jsonParser, (req, res, next) => {
       const { name, email, password } = req.body
-      const newUser = { name, email }
+      const newUser = { name, email, password }
   
       for (const [key, value] of Object.entries(newUser)) {
+          
         if (value == null) {
-          return res.status(400).json({
+           return res.status(400).json({
             error: { message: `Missing '${key}' in request body` }
           })
         }
@@ -38,20 +39,23 @@ const serializeUser = user => ({
   
       newUser.name = name;
       newUser.password = password;
-  
+      newUser.email = email;
+
       UsersService.insertUser(
         req.app.get('db'),
         newUser
-      )
-        .then(user => {
+      ).then(user => {
           res
             .status(201)
             .location(path.posix.join(req.originalUrl, `/${user.id}`))
-            .json(serializeUser(user))
+            .json((user));
         })
         .catch(next)
     })
   
+/*usersRouter
+    .route('/:emailId') */
+
   usersRouter
     .route('/:user_id')
     .all((req, res, next) => {
