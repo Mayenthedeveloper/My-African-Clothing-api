@@ -25,32 +25,51 @@ const serializeUser = user => ({
         .catch(next)
     })
     .post(jsonParser, (req, res, next) => {
-      const { name, email, password } = req.body
-      const newUser = { name, email, password }
-  
-      for (const [key, value] of Object.entries(newUser)) {
-          
-        if (value == null) {
-           return res.status(400).json({
-            error: { message: `Missing '${key}' in request body` }
-          })
-        }
-      }
-  
-      newUser.name = name;
-      newUser.password = password;
-      newUser.email = email;
+        const { password, name, email} = req.body
 
-      UsersService.insertUser(
-        req.app.get('db'),
-        newUser
-      ).then(user => {
-          res
-            .status(201)
-            .location(path.posix.join(req.originalUrl, `/${user.id}`))
-            .json((user));
+    for (const field of ['name', 'email', 'password'])
+      if (!req.body[field])
+        return res.status(400).json({
+          error: `Missing '${field}' in request body`
         })
-        .catch(next)
+
+    // TODO: check user_name doesn't start with spaces
+
+    const passwordError = UsersService.validatePassword(password)
+
+    if (passwordError)
+      return res.status(400).json({ error: passwordError })
+
+    UsersService.hasUserWithUserName(
+      req.app.get('db'),
+      name
+    )
+      .then(hasUserWithUserName => {
+        if (hasUserWithUserName)
+          return res.status(400).json({ error: `Username already taken` })
+
+        return UsersService.hashPassword(password)
+          .then(hashedPassword => {
+            const newUser = {
+              name,
+              password: hashedPassword,
+              email,
+              date_created: 'now()',
+            }
+
+            return UsersService.insertUser(
+              req.app.get('db'),
+              newUser
+            )
+              .then(user => {
+                res
+                  .status(201)
+                  .location(path.posix.join(req.originalUrl, `/${user.id}`))
+                  .json(serializeUser(user))
+              })
+          })
+      })
+      .catch(next)
     })
   
 /*usersRouter
