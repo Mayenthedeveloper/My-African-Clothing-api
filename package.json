@@ -10,7 +10,7 @@
     "predeploy": "npm audit",
     "deploy": "git push heroku main",
     "migrate": "postgrator --config postgrator-config.js",
-    "seed": "psql -U dunder_mifflin -d clothing -f ./seeds/seed.african_clothing_products.sql"
+    "seed": "psql -U dunder_mifflin -d clothing -f ./seeds/seed.users.sql"
   },
   "keywords": [],
   "author": "",

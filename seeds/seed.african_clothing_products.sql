@@ -1,4 +1,4 @@
-INSERT INTO african_clothings_products ( name, category, image, price, brand, size, description)
+INSERT INTO products ( name, category, image, price, brand, size, description)
 VALUES
   ( 'Skirt and blouse','Skirt and Blouse', '/images/snb1.png',8.99, 'Ankara', 'medium', 'Ankara handmade fabric'),
   ( 'Gown','Gown', '/images/dress2.jpg', 7.99, 'Ankara', 'Large', 'Ankara handmade fabric' ),

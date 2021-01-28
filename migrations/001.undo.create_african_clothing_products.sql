@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS african_clothings_products;
+DROP TABLE IF EXISTS products;
