@@ -1,6 +1,6 @@
 const CartsService = {
     getAllProducts(knex) {
-      return knex.select('*').from('african_clothings_products')
+      return knex.select('*').from('carts')
     },
   
     insertCart(knex, newCart) {
@@ -15,20 +15,20 @@ const CartsService = {
   
     getById(knex, id) {
       return knex
-        .from('african_clothings_products')
+        .from('carts')
         .select('*')
         .where('id', id)
         .first()
     },
   
     deleteProduct(knex, id) {
-      return knex('african_clothings_products')
+      return knex('carts')
         .where({ id })
         .delete()
     },
   
     updateProduct(knex, id, newProductFields) {
-      return knex('african_clothings_products')
+      return knex('carts')
         .where({ id })
         .update(newProductFields)
     },

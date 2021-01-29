@@ -1,12 +1,21 @@
-const ProductsService = {
-    getAllProducts(knex) {
-      return knex.select('*').from('african_clothings_products')
+const UsersProductsService = {
+    getAllUsersProducts(knex) {
+      return knex.select('*').from('user_products')
+    },
+
+
+    getProductsOfUsers(knex, user_id) {
+      return knex
+        .from('user_products')
+        .select('*')
+        .where('user_id', user_id)
+      
     },
   
-    insertProduct(knex, newProduct) {
+    insertUsersProducts(knex, newUsersProducts) {
       return knex
-        .insert(newProduct)
-        .into('african_clothings_products')
+        .insert(newUsersProducts)
+        .into('user_products')
         .returning('*')
         .then(rows => {
           return rows[0]
@@ -15,23 +24,23 @@ const ProductsService = {
   
     getById(knex, id) {
       return knex
-        .from('african_clothings_products')
+        .from('user_products')
         .select('*')
         .where('id', id)
         .first()
     },
   
-    deleteProduct(knex, id) {
-      return knex('african_clothings_products')
+    deleteUsersProducts(knex, id) {
+      return knex('user_products')
         .where({ id })
         .delete()
     },
   
-    updateProduct(knex, id, newProductFields) {
-      return knex('african_clothings_products')
+    updateUsersProducts(knex, id, newUsersProductsFields) {
+      return knex('user_products')
         .where({ id })
-        .update(newProductFields)
+        .update(newUsersProductsFields)
     },
   }
   
-  module.exports = ProductsService
+  module.exports = UsersProductsService

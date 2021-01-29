@@ -1,88 +1,92 @@
 const path = require('path')
 const express = require('express')
 const xss = require('xss')
-const ProductsService = require('./user-products-service')
+const UsersProductsService = require('./user-products-service')
 const { ppid } = require('process')
 
-const productsRouter = express.Router()
+const UsersProductsRouter = express.Router()
 const jsonParser = express.json()
 
-const serializeProduct = products => ({
-  id: products.id,
-  name: products.name,
-  category: products.category,
-  image: products.image,
-  price: products.price,
-  brand: products.brand,
-  size: products.size,
-  description: products.description
+const serializeUserProducts = userProduct => ({
+  id: userProduct.id,
+  user_id: userProduct.user_id,
+  product_id: userProduct.product_id
+  
 })
 
-productsRouter
+UsersProductsRouter
   .route('/')
   .get((req, res, next) => {
     const knexInstance = req.app.get('db')
-    
-    ProductsService.getAllProducts(knexInstance)
-      .then(products => {
-        res.json(products.map(serializeProduct))
+    const {user_id} = req.query
+
+    if(user_id){
+      UsersProductsService.getProductsOfUsers(knexInstance, user_id)
+      .then(userProducts => {
+        res.json(userProducts.map(serializeUserProducts))
       })
       .catch(next)
+    }else{
+
+      UsersProductsService.getAllUsersProducts(knexInstance)
+        .then(userProducts => {
+          res.json(userProducts.map(serializeUserProducts))
+        })
+        .catch(next)
+    }
+
+
+    
   })
   .post(jsonParser, (req, res, next) => {
-    const { name, category, image, price, brand, size, description } = req.body
-    const newProduct = { name, price, image, category, brand, size, description }
+    const { user_id, product_id} = req.body
+    const newUserProduct = { user_id, product_id}
 
-    for (const [key, value] of Object.entries(newProduct))
+    for (const [key, value] of Object.entries(newUserProduct))
       if (value == null)
         return res.status(400).json({
           error: { message: `Missing '${key}' in request body` }
         })
-
-    newProduct.name = name;
-    newProduct.price = price;
-    newProduct.image = image;
-    newProduct.size = size;
     
 
-    ProductsService.insertProduct(
+    UsersProductsService.insertUsersProducts(
       req.app.get('db'),
-      newProduct
+      newUserProduct
     )
-      .then(product => {
+      .then(userProduct => {
         res
           .status(201)
-          .location(path.posix.join(req.originalUrl, `/${product.id}`))
-          .json(serializeComment(product))
+          .location(path.posix.join(req.originalUrl, `/${userProduct.id}`))
+          .json(serializeUserProducts(userProduct))
       })
       .catch(next)
   })
 
-productsRouter
-  .route('/:product_id')
+  UsersProductsRouter
+  .route('/:id')
   .all((req, res, next) => {
-    ProductsService.getById(
+    UsersProductsService.getById(
       req.app.get('db'),
-      req.params.product_id
+      req.params.id
     )
-      .then(product => {
-        if (!product) {
+      .then(userProduct => {
+        if (!userProduct) {
           return res.status(404).json({
-            error: { message: `Product doesn't exist` }
+            error: { message: `UserProduct doesn't exist` }
           })
         }
-        res.product = product
+        res.userProduct = userProduct
         next()
       })
       .catch(next)
   })
   .get((req, res, next) => {
-    res.json(serializeProduct(res.product))
+    res.json(serializeUserProducts(res.userProduct))
   })
   .delete((req, res, next) => {
-    ProductsService.deleteProduct(
+    UsersProductsService.deleteUsersProducts(
       req.app.get('db'),
-      req.params.product_id
+      req.params.id
     )
       .then(numRowsAffected => {
         res.status(204).end()
@@ -90,21 +94,21 @@ productsRouter
       .catch(next)
   })
   .patch(jsonParser, (req, res, next) => {
-    const { price, size, description } = req.body
-    const productToUpdate = { price, size, description}
+    const { user_id, product_id } = req.body
+    const newUserProductToUpdate = { user_id, product_id}
 
-    const numberOfValues = Object.values(productToUpdate).filter(Boolean).length
+    const numberOfValues = Object.values(newUserProductToUpdate).filter(Boolean).length
     if (numberOfValues === 0)
       return res.status(400).json({
         error: {
-          message: `Request body must contain either 'price' 'size' or 'description'`
+          message: `Request body must contain either 'Product_id or 'User_id'`
         }
       })
 
-    ProductsService.updateProduct(
+      UsersProductsService.updateUsersProducts(
       req.app.get('db'),
-      req.params.product_id,
-      productToUpdate
+      req.params.id,
+      newUserProductToUpdate
     )
       .then(numRowsAffected => {
         res.status(204).end()
@@ -112,4 +116,4 @@ productsRouter
       .catch(next)
   })
 
-module.exports = productsRouter
+module.exports = UsersProductsRouter

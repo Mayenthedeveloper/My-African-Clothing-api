@@ -1,12 +1,12 @@
-const ProductsService = {
-    getAllProducts(knex) {
-      return knex.select('*').from('products')
+const OrdersService = {
+    getAllOrders(knex) {
+      return knex.select('*').from('orders')
     },
   
-    insertProduct(knex, newProduct) {
+    insertOrder(knex, newProduct) {
       return knex
         .insert(newProduct)
-        .into('products')
+        .into('orders')
         .returning('*')
         .then(rows => {
           return rows[0]
@@ -15,30 +15,31 @@ const ProductsService = {
   
     getById(knex, id) {
       return knex
-        .from('products')
+        .from('orders')
         .select('*')
         .where('id', id)
         .first()
     },
   
-    deleteProduct(knex, id) {
-      return knex('products')
+    deleteOrder(knex, id) {
+      return knex('orders')
         .where({ id })
         .delete()
     },
   
-    updateProduct(knex, id, newProductFields) {
-      return knex('products')
+    updateOrder(knex, id, newOrderFields) {
+      return knex('orders')
         .where({ id })
-        .update(newProductFields)
+        .update(newOrderFields)
     },
   }
   
-  module.exports = ProductsService
+  module.exports = OrdersService
 
 
 
-  // orderServices: 
+
+// orderServices: 
 
   // 1. createOrder (
   //   //inser query for inserting in orderTable with userID and timestamp

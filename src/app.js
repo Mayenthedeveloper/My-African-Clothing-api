@@ -8,6 +8,8 @@ const usersRouter = require('./users/users-router')
 const productsRouter = require('./products/products-router')
 const authRouter = require('./auth/auth-router')
 const cartRouter = require('./carts/carts-router')
+const orderRouter = require('./orders/orders-router')
+const usersProductsRouter = require('./user-products/user-products-router')
 
 const app = express()
 
@@ -22,6 +24,8 @@ app.use('/api/users', usersRouter)
 app.use('/api/products', productsRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/carts', cartRouter)
+app.use('/api/orders', orderRouter)
+app.use('/api/usersProducts', usersProductsRouter)
 
 app.get('/', (req, res) =>{
     res.send('Hello, world!')
