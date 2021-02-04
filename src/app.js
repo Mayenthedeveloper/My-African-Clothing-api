@@ -23,9 +23,10 @@ app.use(cors())
 app.use('/api/users', usersRouter)
 app.use('/api/products', productsRouter)
 app.use('/api/auth', authRouter)
-app.use('/api/carts', cartRouter)
-app.use('/api/orders', orderRouter)
-app.use('/api/usersProducts', usersProductsRouter)
+// app.use('/api/carts', cartRouter)
+// app.use('/api/orders', orderRouter)
+// app.use('/api/orders/addProduct', orderRouter)
+app.use('/api/cart', usersProductsRouter)
 
 app.get('/', (req, res) =>{
     res.send('Hello, world!')

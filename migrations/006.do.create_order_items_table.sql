@@ -4,5 +4,4 @@ CREATE TABLE order_items(
   product_id INTEGER REFERENCES products(id) ON DELETE CASCADE,
   quantity  INTEGER NOT NULL,
   price     INTEGER NOT NULL
-
 );

@@ -3,9 +3,9 @@ const OrdersService = {
       return knex.select('*').from('orders')
     },
   
-    insertOrder(knex, newProduct) {
+    insertOrder(knex, newOrder) {
       return knex
-        .insert(newProduct)
+        .insert(newOrder)
         .into('orders')
         .returning('*')
         .then(rows => {
@@ -13,12 +13,23 @@ const OrdersService = {
         })
     },
   
-    getById(knex, id) {
+    getOrderId(knex, userId, timestamp) {
       return knex
         .from('orders')
         .select('*')
-        .where('id', id)
+        .where('user_id', userId)
+        .andWhere('date_created', timestamp)
         .first()
+    },
+
+    insertOrderItems(knex, newOrderItems) {
+      return knex
+        .insert(newOrderItems)
+        .into('order_items')
+        .returning('*')
+        .then(rows => {
+          return rows[0]
+        })
     },
   
     deleteOrder(knex, id) {

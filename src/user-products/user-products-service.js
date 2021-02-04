@@ -22,12 +22,16 @@ const UsersProductsService = {
         })
     },
   
-    getById(knex, id) {
+    getById(knex, user_id) {
+      console.log(user_id)
       return knex
-        .from('user_products')
-        .select('*')
-        .where('id', id)
-        .first()
+        .raw(` 
+        select user_products.id, products.id as product_id, category, image, size, price, brand, description, products.name 
+        from user_products, users, products
+        where user_products.product_id = products.id 
+        and user_products.user_id = users.id
+        and users.id = ${user_id}
+        `)
     },
   
     deleteUsersProducts(knex, id) {

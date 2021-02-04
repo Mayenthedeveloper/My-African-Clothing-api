@@ -3,6 +3,7 @@ const express = require('express')
 const xss = require('xss')
 const UsersProductsService = require('./user-products-service')
 const { ppid } = require('process')
+const { Console } = require('console')
 
 const UsersProductsRouter = express.Router()
 const jsonParser = express.json()
@@ -16,32 +17,32 @@ const serializeUserProducts = userProduct => ({
 
 UsersProductsRouter
   .route('/')
-  .get((req, res, next) => {
-    const knexInstance = req.app.get('db')
-    const {user_id} = req.query
+  // .get((req, res, next) => {
+  //   const knexInstance = req.app.get('db')
+  //   const {user_id} = req.query
 
-    if(user_id){
-      UsersProductsService.getProductsOfUsers(knexInstance, user_id)
-      .then(userProducts => {
-        res.json(userProducts.map(serializeUserProducts))
-      })
-      .catch(next)
-    }else{
+  //   if(user_id){
+  //     UsersProductsService.getProductsOfUsers(knexInstance, user_id)
+  //     .then(userProducts => {
+  //       res.json(userProducts.map(serializeUserProducts))
+  //     })
+  //     .catch(next)
+  //   }else{
 
-      UsersProductsService.getAllUsersProducts(knexInstance)
-        .then(userProducts => {
-          res.json(userProducts.map(serializeUserProducts))
-        })
-        .catch(next)
-    }
+  //     UsersProductsService.getAllUsersProducts(knexInstance)
+  //       .then(userProducts => {
+  //         res.json(userProducts.map(serializeUserProducts))
+  //       })
+  //       .catch(next)
+  //   }
 
 
-    
-  })
+  // })
   .post(jsonParser, (req, res, next) => {
     const { user_id, product_id} = req.body
     const newUserProduct = { user_id, product_id}
 
+    console.log(newUserProduct)
     for (const [key, value] of Object.entries(newUserProduct))
       if (value == null)
         return res.status(400).json({
@@ -63,32 +64,35 @@ UsersProductsRouter
   })
 
   UsersProductsRouter
-  .route('/:id')
+  .route('/:user_id')
   .all((req, res, next) => {
+    // console.log('test')
+
     UsersProductsService.getById(
       req.app.get('db'),
-      req.params.id
+      req.params.user_id
     )
-      .then(userProduct => {
-        if (!userProduct) {
+      .then(({rows}) => {
+        console.log(rows)
+        if (!rows) {
           return res.status(404).json({
             error: { message: `UserProduct doesn't exist` }
           })
         }
-        res.userProduct = userProduct
+        res.cart = rows
         next()
       })
       .catch(next)
   })
   .get((req, res, next) => {
-    res.json(serializeUserProducts(res.userProduct))
+    res.json(res.cart)
   })
-  .delete((req, res, next) => {
+  .delete(jsonParser, (req, res, next) => {
     UsersProductsService.deleteUsersProducts(
       req.app.get('db'),
-      req.params.id
+      req.body.product_id
     )
-      .then(numRowsAffected => {
+      .then(()=> {
         res.status(204).end()
       })
       .catch(next)

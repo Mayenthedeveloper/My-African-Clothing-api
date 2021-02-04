@@ -24,19 +24,21 @@ ordersRouter
       .catch(next)
   })
   .post(jsonParser, (req, res, next) => {
-    const { orderitem_id, order_id, product_id, quantity, price } = req.body
-    const newOrder= { orderitem_id, order_id, product_id, quantity, price }
-
+    const {userId } = req.body
+    console.log(userId)
+    var user_id = userId
+    var today = new Date()
+    const date = (today.getDate())
+    const month = today.getMonth() +1
+    const year = today.getFullYear()
+    const time =  today.getTime();
+    const date_created = date + "/" + month + "/" + year + "/" + time
+    const newOrder = {user_id, date_created}
     for (const [key, value] of Object.entries(newOrder))
       if (value == null)
         return res.status(400).json({
           error: { message: `Missing '${key}' in request body` }
         })
-
-    newOrder.quantity = quantity;
-    newOrder.price = price;
-    
-    
 
     OrdersService.insertOrder(
       req.app.get('db'),
@@ -46,29 +48,68 @@ ordersRouter
         res
           .status(201)
           .location(path.posix.join(req.originalUrl, `/${order.id}`))
-          .json(serializeComment(order))
+          .json(serializeOrder(order))
+          console.log("inserted")
       })
       .catch(next)
   })
 
+ordersRouter.route('/addProduct')
+.post(jsonParser, (req, res, next) => {
+  console.log("Route hit")
+  //add validation all parameters have been pasd
+    const userId =  req.body.user_id
+    const productId =  req.body.product_id
+    const quantity =  req.body.quantity
+    const price =  req.body.price
+    const timestamp =  req.body.timestamp
+    const newOrderItem = {
+      product_id : productId,
+      quantity : quantity,
+      price: price
+    }
+    
+    OrdersService.getOrderId(
+      req.app.get('db'), userId, timestamp
+    ).then (res => {
+      res.order_id
+      console.log(res)
+      //return res
+    })
+    .then( obj => {
+      newOrderItem.order_id = obj.order_Id
+    } ).catch(next)
+
+    console.log(newOrderItem)
+    console.log("ORRDER ID " + newOrderItem.order_id )
+
+    OrdersService.insertOrderItems(
+      req.app.get('db') , newOrderItem
+    ).then(orderItem => {
+      res
+        .status(201)
+        .location(path.posix.join(req.originalUrl, `/${orderItem.id}`))
+    }).catch(next)
+})
+
 ordersRouter
   .route('/:order_id')
-  .all((req, res, next) => {
-    OrdersService.getById(
-      req.app.get('db'),
-      req.params.order_id
-    )
-      .then(order => {
-        if (!order) {
-          return res.status(404).json({
-            error: { message: `Order doesn't exist` }
-          })
-        }
-        res.order = order
-        next()
-      })
-      .catch(next)
-  })
+  // .all((req, res, next) => {
+  //   OrdersService.getById(
+  //     req.app.get('db'),
+  //     req.params.order_id
+  //   )
+  //     .then(order => {
+  //       if (!order) {
+  //         return res.status(404).json({
+  //           error: { message: `Order doesn't exist` }
+  //         })
+  //       }
+  //       res.order = order
+  //       next()
+  //     })
+  //     .catch(next)
+  // })
   .get((req, res, next) => {
     res.json(serializeOrder(res.order))
   })
