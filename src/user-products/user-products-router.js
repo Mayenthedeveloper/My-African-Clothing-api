@@ -42,7 +42,7 @@ UsersProductsRouter
     const { user_id, product_id} = req.body
     const newUserProduct = { user_id, product_id}
 
-    console.log(newUserProduct)
+    //console.log(newUserProduct)
     for (const [key, value] of Object.entries(newUserProduct))
       if (value == null)
         return res.status(400).json({
@@ -73,7 +73,7 @@ UsersProductsRouter
       req.params.user_id
     )
       .then(({rows}) => {
-        console.log(rows)
+       // console.log(rows)
         if (!rows) {
           return res.status(404).json({
             error: { message: `UserProduct doesn't exist` }
@@ -88,14 +88,32 @@ UsersProductsRouter
     res.json(res.cart)
   })
   .delete(jsonParser, (req, res, next) => {
-    UsersProductsService.deleteUsersProducts(
-      req.app.get('db'),
-      req.body.product_id
-    )
-      .then(()=> {
+    console.log("Delete rq body -----------")
+    console.log(req.body)
+    if(req.body.product_id == null)
+    {
+      console.log("Delete all user products ")
+      UsersProductsService.deleteUsersProducts(
+        req.app.get('db'),
+        req.body.user_id
+      )      .then(()=> {
         res.status(204).end()
       })
       .catch(next)
+    }
+    else
+    {
+      console.log("Delete 1 user products ")
+      UsersProductsService.deleteProductFromCart(
+        req.app.get('db'),
+        req.body.user_id,
+        req.body.product_id
+      )      .then(()=> {
+        res.status(204).end()
+      })
+      .catch(next)
+    }
+
   })
   .patch(jsonParser, (req, res, next) => {
     const { user_id, product_id } = req.body
@@ -119,5 +137,6 @@ UsersProductsRouter
       })
       .catch(next)
   })
+
 
 module.exports = UsersProductsRouter
