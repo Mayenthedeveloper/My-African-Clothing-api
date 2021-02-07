@@ -34,16 +34,17 @@ const UsersProductsService = {
         `)
     },
   
-    deleteUsersProducts(knex, user_id) {
+    deleteUsersProducts(knex, id) {
+      console.log({id})
       return knex('user_products')
-      .where('user_id', user_id)
+      .where({id})
         .delete()
     },
-    deleteProductFromCart(knex, user_id, product_id) {
-      return knex .raw(` 
-      DELETE from user_products WHERE id = (SELECT id from user_products where user_id = ${user_id} AND product_id = ${product_id} LIMIT 1)
-      `)
-    },
+    // deleteProductFromCart(knex, user_id, product_id) {
+    //   return knex .raw(` 
+    //   DELETE from user_products WHERE id = (SELECT id from user_products where user_id = ${user_id} AND product_id = ${product_id} LIMIT 1)
+    //   `)
+    // },
   
     updateUsersProducts(knex, id, newUsersProductsFields) {
       return knex('user_products')

@@ -87,34 +87,45 @@ UsersProductsRouter
   .get((req, res, next) => {
     res.json(res.cart)
   })
-  .delete(jsonParser, (req, res, next) => {
-    console.log("Delete rq body -----------")
-    console.log(req.body)
-    if(req.body.product_id == null)
-    {
-      console.log("Delete all user products ")
-      UsersProductsService.deleteUsersProducts(
-        req.app.get('db'),
-        req.body.user_id
-      )      .then(()=> {
-        res.status(204).end()
-      })
-      .catch(next)
-    }
-    else
-    {
-      console.log("Delete 1 user products ")
-      UsersProductsService.deleteProductFromCart(
-        req.app.get('db'),
-        req.body.user_id,
-        req.body.product_id
-      )      .then(()=> {
-        res.status(204).end()
-      })
-      .catch(next)
-    }
+  // .delete(jsonParser, (req, res, next) => {
+  //   console.log("Delete rq body -----------")
+  //   console.log(req.body)
+  //   if(req.body.product_id == null)
+  //   {
+  //     console.log("Delete all user products ")
+  //     UsersProductsService.deleteUsersProducts(
+  //       req.app.get('db'),
+  //       req.body.user_id
+  //     )      .then(()=> {
+  //       res.status(204).end()
+  //     })
+  //     .catch(next)
+  //   }
+  //   else
+  //   {
+  //     console.log("Delete 1 user products ")
+  //     UsersProductsService.deleteProductFromCart(
+  //       req.app.get('db'),
+  //       req.body.user_id,
+  //       req.body.product_id
+  //     )      .then(()=> {
+  //       res.status(204).end()
+  //     })
+  //     .catch(next)
+  //   }
 
+  // })
+  .delete(jsonParser, (req, res, next) => {
+    UsersProductsService.deleteUsersProducts(
+      req.app.get('db'),
+      req.body.product_id
+    )
+      .then(()=> {
+        res.status(204).end()
+      })
+      .catch(next)
   })
+  
   .patch(jsonParser, (req, res, next) => {
     const { user_id, product_id } = req.body
     const newUserProductToUpdate = { user_id, product_id}
