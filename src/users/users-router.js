@@ -72,8 +72,6 @@ const serializeUser = user => ({
       .catch(next)
     })
   
-/*usersRouter
-    .route('/:emailId') */
 
   usersRouter
     .route('/:user_id')

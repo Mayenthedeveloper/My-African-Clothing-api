@@ -25,7 +25,7 @@ ordersRouter
   })
   .post(jsonParser, (req, res, next) => {
     const {userId } = req.body
-    console.log(userId)
+   // console.log(userId)
     var user_id = userId
     var today = new Date()
     const date = (today.getDate())

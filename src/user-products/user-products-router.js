@@ -17,32 +17,12 @@ const serializeUserProducts = userProduct => ({
 
 UsersProductsRouter
   .route('/')
-  // .get((req, res, next) => {
-  //   const knexInstance = req.app.get('db')
-  //   const {user_id} = req.query
 
-  //   if(user_id){
-  //     UsersProductsService.getProductsOfUsers(knexInstance, user_id)
-  //     .then(userProducts => {
-  //       res.json(userProducts.map(serializeUserProducts))
-  //     })
-  //     .catch(next)
-  //   }else{
-
-  //     UsersProductsService.getAllUsersProducts(knexInstance)
-  //       .then(userProducts => {
-  //         res.json(userProducts.map(serializeUserProducts))
-  //       })
-  //       .catch(next)
-  //   }
-
-
-  // })
   .post(jsonParser, (req, res, next) => {
     const { user_id, product_id} = req.body
     const newUserProduct = { user_id, product_id}
 
-    //console.log(newUserProduct)
+    
     for (const [key, value] of Object.entries(newUserProduct))
       if (value == null)
         return res.status(400).json({
@@ -66,14 +46,14 @@ UsersProductsRouter
   UsersProductsRouter
   .route('/:user_id')
   .all((req, res, next) => {
-    // console.log('test')
+    
 
     UsersProductsService.getById(
       req.app.get('db'),
       req.params.user_id
     )
       .then(({rows}) => {
-       // console.log(rows)
+       
         if (!rows) {
           return res.status(404).json({
             error: { message: `UserProduct doesn't exist` }
@@ -87,34 +67,7 @@ UsersProductsRouter
   .get((req, res, next) => {
     res.json(res.cart)
   })
-  // .delete(jsonParser, (req, res, next) => {
-  //   console.log("Delete rq body -----------")
-  //   console.log(req.body)
-  //   if(req.body.product_id == null)
-  //   {
-  //     console.log("Delete all user products ")
-  //     UsersProductsService.deleteUsersProducts(
-  //       req.app.get('db'),
-  //       req.body.user_id
-  //     )      .then(()=> {
-  //       res.status(204).end()
-  //     })
-  //     .catch(next)
-  //   }
-  //   else
-  //   {
-  //     console.log("Delete 1 user products ")
-  //     UsersProductsService.deleteProductFromCart(
-  //       req.app.get('db'),
-  //       req.body.user_id,
-  //       req.body.product_id
-  //     )      .then(()=> {
-  //       res.status(204).end()
-  //     })
-  //     .catch(next)
-  //   }
-
-  // })
+  
   .delete(jsonParser, (req, res, next) => {
     UsersProductsService.deleteUsersProducts(
       req.app.get('db'),

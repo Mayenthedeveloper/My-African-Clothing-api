@@ -17,15 +17,13 @@ app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
   skip: () => NODE_ENV === 'test'
 }))
 
-// app.use(morgan(morganOption))
+
 app.use(helmet())
 app.use(cors())
 app.use('/api/users', usersRouter)
 app.use('/api/products', productsRouter)
 app.use('/api/auth', authRouter)
-// app.use('/api/carts', cartRouter)
-// app.use('/api/orders', orderRouter)
-// app.use('/api/orders/addProduct', orderRouter)
+
 app.use('/api/cart', usersProductsRouter)
 
 app.get('/', (req, res) =>{
