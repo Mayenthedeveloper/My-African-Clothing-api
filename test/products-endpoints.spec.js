@@ -116,4 +116,44 @@ describe('African Clothing Endpoints', function() {
       })
     })
   })
+
+  // describe(`DELETE /api/products/:product_id`, () => {
+  //   context(`Given no products`, () => {
+  //     it(`responds with 404`, () => {
+  //       const productId = 123456
+  //       return supertest(app)
+  //         .delete(`/api/products/${productId}`)
+  //         .expect(404, { error: { message: `Product doesn't exist` } })
+  //     })
+  //   })
+
+  //   context('Given there are products in the database', () => {
+  //     const testUsers = makeUsersArray();
+  //     const testProducts = makeProductsArray()
+
+  //     beforeEach('insert products', () => {
+  //       return db
+  //         .into('users')
+  //         .insert(testUsers)
+  //         .then(() => {
+  //           return db
+  //             .into('products')
+  //             .insert(testProducts)
+  //         })
+  //     })
+
+  //     it('responds with 204 and removes the product', () => {
+  //       const idToRemove = 2
+  //       const expectedProduct = testProducts.filter(product => product.id !== idToRemove)
+  //       return supertest(app)
+  //         .delete(`/api/products/${idToRemove}`)
+  //         .expect(204)
+  //         .then(res =>
+  //           supertest(app)
+  //             .get(`/api/products`)
+  //             .expect(expectedProduct)
+  //         )
+  //     })
+  //   })
+  // })
 })
