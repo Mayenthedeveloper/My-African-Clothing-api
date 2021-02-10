@@ -46,15 +46,12 @@ UsersProductsRouter
   UsersProductsRouter
   .route('/:user_id')
   .all((req, res, next) => {
-    
-
     UsersProductsService.getById(
       req.app.get('db'),
       req.params.user_id
     )
       .then(({rows}) => {
-       
-        if (!rows) {
+        if (!rows.length > 0) { //Aditi changed this
           return res.status(404).json({
             error: { message: `UserProduct doesn't exist` }
           })

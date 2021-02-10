@@ -23,8 +23,7 @@ const UsersProductsService = {
     },
   
     getById(knex, user_id) {
-      console.log(user_id)
-      return knex
+     return knex
         .raw(` 
         select user_products.id, products.id as product_id, category, image, size, price, brand, description, products.name 
         from user_products, users, products
@@ -35,8 +34,7 @@ const UsersProductsService = {
     },
   
     deleteUsersProducts(knex, id) {
-      console.log({id})
-      return knex('user_products')
+     return knex('user_products')
       .where({id})
         .delete()
     },

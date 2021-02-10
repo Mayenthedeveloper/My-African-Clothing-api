@@ -84,7 +84,7 @@ describe('User Product Endpoints', function() {
 
 //   })
 
-  describe.only(`GET /api/cart/:user_id`, () => {
+  describe(`GET /api/cart/:user_id`, () => {
     // context(`Given no product_id`, () => {
     //   it(`responds with 404`, () => {
     //     const productId = 123456
@@ -108,29 +108,29 @@ describe('User Product Endpoints', function() {
          .then(()=>{
             return db
             .into('products')
-            .insert(testProducts)
+            .insert(testProducts[0])
             .then(()=>{
                return db
                 .into('user_products')
-                .insert(testUProducts)
+                .insert(testUProducts[0])
             })
          })
           
       })
 
       it('responds with 200 and the specified product', () => {
-        const userId = 1
-        const expectedProduct =   {
+        const userId = 10
+        const expectedProduct =   [{
             id: 1,
-            product_id:1,
-            name: 'Skirt and Blouse',
+            product_id: 1,
             category:  'Skirt and Blouse',
             image: '/images/snb1.png',
+            size: 'medium',
             price: '19.99',
             brand: 'Ankara',
-            size: 'medium',
+            name: 'Skirt and Blouse',
             description: ''
-        }
+        }]
         return supertest(app)
           .get(`/api/cart/${userId}`)
           .expect(200, expectedProduct)
@@ -141,39 +141,52 @@ describe('User Product Endpoints', function() {
   describe(`DELETE /api/cart/:product_id`, () => {
     context(`Given no product`, () => {
       it(`responds with 404`, () => {
-        const upId = 123456
+       const upId = 123456
         return supertest(app)
           .delete(`/api/cart/${upId}`)
-          .expect(404, { error: { message: `product doesn't exist` } })
+          .expect(404, { error: { message: `UserProduct doesn't exist` } })
       })
     })
 
     context('Given there are product in the database', () => {
-      const testProducts = makeUPArray();
+    
+      const testUProducts = makeUPArray()
+      const testUsers = makeUsersArray()
+      const testProducts = makeProductsArray()
       
 
       beforeEach('insert products', () => {
         return db
-          .into('user_id')
-          .insert(testProducts)
+          .into('users')
+          .insert(testUsers[0])
           .then(() => {
             return db
-              .into('product_id')
-              .insert(testProducts)
+              .into('products')
+              .insert(testProducts[0])
+              .then(()=>{
+                return db
+              .into('user_products')
+              .insert(testUProducts[0])
+              })
+              
           })
       })
 
       it('responds with 204 and removes the Product', () => {
-        const idToRemove = 2
-        const expectedProduct = testProducts.filter(product => product.id !== idToRemove)
+        const idToRemove = {
+            product_id : 1
+        }
+        const userID = 10
+        //const expectedProduct = testProducts.filter(product => product.id == idToRemove)
         return supertest(app)
-          .delete(`/api/cart/${idToRemove}`)
+          .delete(`/api/cart/${userID}`)
+          .send(idToRemove)
           .expect(204)
-          .then(res =>
-            supertest(app)
-              .get(`/api/cart`)
-              .expect(expectedProduct)
-          )
+        //   .then(res =>
+        //     supertest(app)
+        //       .get(`/api/cart`)
+        //       .expect(expectedProduct)
+        //   )
       })
     })
   })
