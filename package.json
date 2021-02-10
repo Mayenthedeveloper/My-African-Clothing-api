@@ -16,9 +16,9 @@
     "seed": "psql -U dunder_mifflin -d clothing -f ./seeds/seed.user_product.sql"
   },
   "keywords": [],
-   "engines": {
-      "node": "12.19.0"
-   },
+  "engines": {
+    "node": "12.19.0"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
