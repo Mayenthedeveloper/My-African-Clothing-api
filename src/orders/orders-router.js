@@ -25,7 +25,7 @@ ordersRouter
   })
   .post(jsonParser, (req, res, next) => {
     const {userId } = req.body
-   // console.log(userId)
+  
     var user_id = userId
     var today = new Date()
     const date = (today.getDate())
@@ -49,14 +49,14 @@ ordersRouter
           .status(201)
           .location(path.posix.join(req.originalUrl, `/${order.id}`))
           .json(serializeOrder(order))
-          console.log("inserted")
+          // console.log("inserted")
       })
       .catch(next)
   })
 
 ordersRouter.route('/addProduct')
 .post(jsonParser, (req, res, next) => {
-  console.log("Route hit")
+  // console.log("Route hit")
   //add validation all parameters have been pasd
     const userId =  req.body.user_id
     const productId =  req.body.product_id
@@ -73,15 +73,15 @@ ordersRouter.route('/addProduct')
       req.app.get('db'), userId, timestamp
     ).then (res => {
       res.order_id
-      console.log(res)
+      // console.log(res)
       //return res
     })
     .then( obj => {
       newOrderItem.order_id = obj.order_Id
     } ).catch(next)
 
-    console.log(newOrderItem)
-    console.log("ORRDER ID " + newOrderItem.order_id )
+    // console.log(newOrderItem)
+    // console.log("ORRDER ID " + newOrderItem.order_id )
 
     OrdersService.insertOrderItems(
       req.app.get('db') , newOrderItem
