@@ -11,7 +11,7 @@ This API is not open for public use at this time, but is CORS compatible. The AP
 ##  /products
 | Route           | Request        |Body           |Result       |
 |   ----------    |  ----------    |-------------- | --------    |
-| /products/:id   | git status     | git status    |             |
+| products/:id   | git status     | git status    |             |
 
 
 ##  /users
