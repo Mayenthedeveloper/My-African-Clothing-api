@@ -8,9 +8,39 @@ This API is not open for public use at this time, but is CORS compatible. The AP
 
 # Endpoints
 
-##  /users
-| Route        | Request        |Body           |Result       |
-| :---         | ----------     | --------------| --------    |
-| git status   | git status     | git status    | --------    |
-| git diff     | git diff       | git diff      | --------    |
+##  /products
+| Route           | Request        |Body           |Result       |
+| /products       |  ----------     | --------------| --------    |
+| /products/:id   | git status     | git status    | --------    |
+|                 | git diff       | git diff      | --------    |
 | Content Cell  | Content Cell  | --------      | --------    |
+
+##  /users
+| Route           | Request        |Body           |Result       |
+| /products       |  ----------     | --------------| --------    |
+| /products/:id   | git status     | git status    | --------    |
+|                 | git diff       | git diff      | --------    |
+| Content Cell  | Content Cell  | --------      | --------    |
+
+##  /user_product
+| Route           | Request        |Body           |Result       |
+| /products       |  ----------     | --------------| --------    |
+| /products/:id   | git status     | git status    | --------    |
+|                 | git diff       | git diff      | --------    |
+| Content Cell  | Content Cell  | --------      | --------    |
+
+## Status codes
+
+
+## Tech Stack
+
+Javascript
+React
+Node.js
+Postgres
+HTML
+CSS
+
+
+
+
