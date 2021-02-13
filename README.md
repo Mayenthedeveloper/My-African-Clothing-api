@@ -6,4 +6,4 @@ You can also view the live site or visit the frontend repo.
 
 This API is not open for public use at this time, but is CORS compatible. The API will respond with a JSON object.
 
-#Endpoints
+# Endpoints
