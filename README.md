@@ -7,3 +7,10 @@ You can also view the live site or visit the frontend repo.
 This API is not open for public use at this time, but is CORS compatible. The API will respond with a JSON object.
 
 # Endpoints
+
+##  /users
+| Route        | Request        |Body           |Result       |
+| :---         | ----------     | --------------| --------    |
+| git status   | git status     | git status    | --------    |
+| git diff     | git diff       | git diff      | --------    |
+| Content Cell  | Content Cell  | --------      | --------    |
