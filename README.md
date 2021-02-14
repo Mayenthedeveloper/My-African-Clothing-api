@@ -26,9 +26,9 @@ This API is not open for public use at this time, but is CORS compatible. The AP
 ##  /user_product
 | Route                         | Request        |Body             |Result                            |
 |   ----------                  |  ----------    |--------------   | --------                         |
-| /user_products                | GET            |                 |return all product                |
-| /user_products/:user_id       | GET            |                 |return user product with that ID  |
-| /user_products/:product_id    | DELETE         |                 |delete user product with that ID  |
+| /cart                         | GET            |                 |return all product                |
+| /cart/:user_id                | GET            |                 |return user product with that ID  |
+| /cart/:product_id             | DELETE         |                 |delete user product with that ID  |
 
 
 ## Status codes
