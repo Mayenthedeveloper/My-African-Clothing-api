@@ -47,12 +47,12 @@ This API is not open for public use at this time, but is CORS compatible. The AP
 
 ## Tech Stack
 
-Javascript
-React
-Node.js
-Postgres
-HTML
-CSS
+* Javascript
+* React
+* Node.js
+* Postgres
+* HTML
+* CSS
 
 
 
