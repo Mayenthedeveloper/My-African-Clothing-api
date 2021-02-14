@@ -11,22 +11,22 @@ This API is not open for public use at this time, but is CORS compatible. The AP
 ##  /products
 | Route           | Request        |Body             |Result                      |
 |   ----------    |  ----------    |--------------   | --------                   |
+| products        | GET            |                 |return all product          |
 | products/:id    | GET            |                 |return product with that ID |
 
 
 ##  /users
-| Route           | Request        |Body           |Result       |
-| /products       |  ----------     | --------------| --------    |
-| /products/:id   | git status     | git status    | --------    |
-|                 | git diff       | git diff      | --------    |
-| Content Cell  | Content Cell  | --------      | --------    |
+| Route           | Request        |Body             |Result                      |
+|   ----------    |  ----------    |--------------   | --------                   |
+| products        | GET            |                 |return all product          |
+| products/:id    | GET            |                 |return product with that ID |
+
 
 ##  /user_product
-| Route           | Request        |Body           |Result       |
-| /products       |  ----------     | --------------| --------    |
-| /products/:id   | git status     | git status    | --------    |
-|                 | git diff       | git diff      | --------    |
-| Content Cell  | Content Cell  | --------      | --------    |
+| Route           | Request        |Body             |Result                      |
+|   ----------    |  ----------    |--------------   | --------                   |
+| products        | GET            |                 |return all product          |
+| products/:id    | GET            |                 |return product with that ID |
 
 ## Status codes
 
