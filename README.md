@@ -16,17 +16,19 @@ This API is not open for public use at this time, but is CORS compatible. The AP
 
 
 ##  /users
-| Route           | Request        |Body             |Result                      |
-|   ----------    |  ----------    |--------------   | --------                   |
-| products        | GET            |                 |return all product          |
-| products/:id    | GET            |                 |return product with that ID |
+| Route             | Request        |Body                      |Result                      |
+|   ----------      |  ----------    |--------------            | --------                   |
+| users             | GET            |                          |return all users            |
+| users             | POST           |name, email,password      |registers user              |
+| users/:user_id    | GET            |                          |return user with that ID    |
 
 
 ##  /user_product
-| Route           | Request        |Body             |Result                      |
-|   ----------    |  ----------    |--------------   | --------                   |
-| products        | GET            |                 |return all product          |
-| products/:id    | GET            |                 |return product with that ID |
+| Route                     | Request        |Body             |Result                            |
+|   ----------              |  ----------    |--------------   | --------                         |
+| user_products             | GET            |                 |return all product                |
+| /user_products/:user_id   | GET            |                 |return user product with that ID  |
+| /user_products/:user_id   | DELETE         |                 |delete user product with that ID  |
 
 ## Status codes
 
