@@ -9,29 +9,40 @@ This API is not open for public use at this time, but is CORS compatible. The AP
 # Endpoints
 
 ##  /products
-| Route                   | Request        |Body             |Result                      |
-|   ----------            |  ----------    |--------------   | --------                   |
-| products                | GET            |                 |return all product          |
-| products/:product_id    | GET            |                 |return product with that ID |
+| Route                     | Request        |Body             |Result                      |
+|   ----------              |  ----------    |--------------   | --------                   |
+| /products                 | GET            |                 |return all product          |
+| /products/:product_id     | GET            |                 |return product with that ID |
 
 
 ##  /users
-| Route             | Request        |Body                      |Result                      |
-|   ----------      |  ----------    |--------------            | --------                   |
-| users             | GET            |                          |return all users            |
-| users             | POST           |name, email,password      |registers user              |
-| users/:user_id    | GET            |                          |return user with that ID    |
+| Route               | Request        |Body                      |Result                      |
+|   ----------        |  ----------    |--------------            | --------                   |
+| /users              | GET            |                          |return all users            |
+| /users              | POST           |name, email,password      |registers user              |
+| /users/:user_id     | GET            |                          |return user with that ID    |
 
 
 ##  /user_product
 | Route                         | Request        |Body             |Result                            |
 |   ----------                  |  ----------    |--------------   | --------                         |
-| user_products                 | GET            |                 |return all product                |
+| /user_products                | GET            |                 |return all product                |
 | /user_products/:user_id       | GET            |                 |return user product with that ID  |
 | /user_products/:product_id    | DELETE         |                 |delete user product with that ID  |
 
 
 ## Status codes
+| Code              | Endpoint                        |Request                    |Possible reason                                                  |
+|   ----------      |  ----------                     |--------------             | --------                                                        |
+| 500               | any                             |   any                     |Server error                                                     |
+| 200               | any                             |   GET                     |Data was successfully returned.                                  |
+| 201               | any                             |   POST                    |Your POST was successful.                                        |
+| 204               | any with an id path param       |   PATCH                   |Your entry was successfully updated.                             |
+| 204               | any with an id path param       |   DELETE                  |Your entry was successfully deleted.                             |
+| 400               | any                             |   POST                    |A required query param in the body is missing.                   | 
+| 404               | any with an id path param       |   GET, DELETE, or PATCH   |An entry with that ID doesn't exist.                             |
+| 400               | any with an id path param       |   PATCH                   |You must include at least one of the query params in the body.   |
+
 
 
 ## Tech Stack
