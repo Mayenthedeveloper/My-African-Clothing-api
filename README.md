@@ -9,10 +9,10 @@ This API is not open for public use at this time, but is CORS compatible. The AP
 # Endpoints
 
 ##  /products
-| Route           | Request        |Body             |Result                      |
-|   ----------    |  ----------    |--------------   | --------                   |
-| products        | GET            |                 |return all product          |
-| products/:id    | GET            |                 |return product with that ID |
+| Route                   | Request        |Body             |Result                      |
+|   ----------            |  ----------    |--------------   | --------                   |
+| products                | GET            |                 |return all product          |
+| products/:product_id    | GET            |                 |return product with that ID |
 
 
 ##  /users
