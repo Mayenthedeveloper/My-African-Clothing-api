@@ -29,71 +29,10 @@ describe('User Product Endpoints', function() {
 
   afterEach('cleanup',() => db.raw('TRUNCATE users, user_products, products RESTART IDENTITY CASCADE'))
 
-//   describe(`GET /api/products`, () => {
-//     context(`Given no products`, () => {
-//       it(`responds with 200 and an empty list`, () => {
-//         return supertest(app)
-//           .get('/api/products')
-//           .expect(200, [])
-//       })
-//     })
 
-//     context('Given there are products in the database', () => {
-//       const testUsers = makeUsersArray();
-//       const testProducts = makeProductsArray();
-
-//       beforeEach('insert products', () => {
-//         return db
-//           .into('users')
-//           .insert(testUsers)
-//           .then(() => {
-//             return db
-//               .into('products')
-//               .insert(testProducts)
-//           })
-//       })
-
-//       it('responds with 200 and all of the products', () => {
-//         return supertest(app)
-//           .get('/api/products')
-//           .expect(200, testProducts)
-//       })
-//     })
-
-//      context('Given there are products in the database', () => {
-//       const testUsers = makeUsersArray();
-//       const testProducts = makeProductsArray();
-
-//       beforeEach('insert products', () => {
-//         return db
-//           .into('users')
-//           .insert(testUsers)
-//           .then(() => {
-//             return db
-//               .into('products')
-//               .insert(testProducts)
-//           })
-//       })
-
-//       it('responds with 200 and all of the products', () => {
-//         return supertest(app)
-//           .get('/api/products')
-//           .expect(200, testProducts)
-//       })
-//     })
-
-//   })
 
   describe(`GET /api/cart/:user_id`, () => {
-    // context(`Given no product_id`, () => {
-    //   it(`responds with 404`, () => {
-    //     const productId = 123456
-    //     return supertest(app)
-    //       .get(`/api/cart/${productId}`)
-    //       .expect(404, { error: { message: `Product_id doesn't exist` } })
-    //   })
-    // })
-
+   
     context('Given there are product in the database', () => {
       const testUProducts = makeUPArray()
       const testUsers = makeUsersArray()
@@ -182,11 +121,7 @@ describe('User Product Endpoints', function() {
           .delete(`/api/cart/${userID}`)
           .send(idToRemove)
           .expect(204)
-        //   .then(res =>
-        //     supertest(app)
-        //       .get(`/api/cart`)
-        //       .expect(expectedProduct)
-        //   )
+        
       })
     })
   })

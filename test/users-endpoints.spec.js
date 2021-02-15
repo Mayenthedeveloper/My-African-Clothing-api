@@ -123,14 +123,7 @@ describe('Users Endpoints', function() {
         // expect(bcrypt.compare(res.body.password, newUser.password)).to.eql(true)
           expect(res.body).to.have.property('id')
           expect(res.headers.location).to.eql(`/api/users/${res.body.id}`)
-        //   const expected = new Intl.DateTimeFormat('en-US').format(new Date())
-        //   const actual = new Intl.DateTimeFormat('en-US').format(new Date(res.body.date_created))
-
-        // const expected = new Date().toLocaleString('en', {timeZone: 'UTC'}) 
-        // const actual = new Date(res.body.date_created).toLocaleString()
-
-
-        //   expect(actual).to.eql(expected)
+        
         })
         .then(res =>
           supertest(app)
@@ -152,45 +145,7 @@ describe('Users Endpoints', function() {
     })
   })
 
-  // describe(`DELETE /api/users/:user_id`, () => {
-  //   context(`Given no users`, () => {
-  //     it(`responds with 404`, () => {
-  //       const userId = 123456
-  //       return supertest(app)
-  //         .delete(`/api/users/${userId}`)
-  //         .expect(404, { error: { message: `User doesn't exist` } })
-  //     })
-  //   })
 
-  //   context('Given there are users in the database', () => {
-  //     const testUsers = makeUsersArray();
-  //     const testProducts = makeProductsArray()
-
-  //     beforeEach('insert users', () => {
-  //       return db
-  //         .into('users')
-  //         .insert(testUsers)
-  //         .then(() => {
-  //           return db
-  //             .into('products')
-  //             .insert(testProducts)
-  //         })
-  //     })
-
-  //     it('responds with 204 and removes the user', () => {
-  //       const idToRemove = 2
-  //       const expectedUser= testUsers.filter(user => user.id !== idToRemove)
-  //       return supertest(app)
-  //         .delete(`/api/users/${idToRemove}`)
-  //         .expect(204)
-  //         .then(res =>
-  //           supertest(app)
-  //             .get(`/api/users`)
-  //             .expect(expectedUser)
-  //         )
-  //     })
-  //   })
-  // })
   
 })
 

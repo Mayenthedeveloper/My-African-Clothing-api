@@ -51,18 +51,18 @@ UsersProductsRouter
       req.params.user_id
     )
       .then(({rows}) => {
-        if (!rows.length > 0) { //Aditi changed this
+        if (!rows.length > 0) { 
           return res.status(404).json({
             error: { message: `UserProduct doesn't exist` }
           })
         }
-        res.cart = rows
+        res.user_products = rows
         next()
       })
       .catch(next)
   })
   .get((req, res, next) => {
-    res.json(res.cart)
+    res.json(res.user_products)
   })
   
   .delete(jsonParser, (req, res, next) => {
