@@ -4,7 +4,7 @@ Used in conjunction with the African clothing app, this API provides the functio
 
 You can also view the [live site](https://african-clothing.mayenthedeveloper.vercel.app/) or visit the [frontend repo.](https://github.com/Mayenthedeveloper/African-Clothing-app)
 
-This API is not open for public use at this time, but is CORS compatible. The API will respond with a JSON object.
+This API is not open for public use at this time. 
 
 # Endpoints
 
