@@ -19,7 +19,7 @@ This API is not open for public use at this time.
 | Route               | Request        |Body                      |Result                      |
 |   ----------        |  ----------    |--------------            | --------                   |
 | /users              | GET            |                          |return all users            |
-| /users              | POST           |name, email,password      |registers user              |
+| /users              | POST           |name, email,password      |register  user              |
 | /users/:user_id     | GET            |                          |return user with that ID    |
 
 
